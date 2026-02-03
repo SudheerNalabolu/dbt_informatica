@@ -1,0 +1,29 @@
+name: ifrs_lic_calc_etl
+version: '1.0'
+profile: snowflake
+config-version: 2
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+analysis-paths: ["analysis"]
+data-paths: ["data"]
+test-paths: ["tests"]
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_modules"
+
+models:
+  ifrs_lic_calc_etl:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table
+    +post-hook: "ANALYZE TABLE znawwrkdb.dbaall.WRK_IFRS_LIC_CALC"
+
+vars:
+  ML_FINC_PRD: '202508'
+  POP_INFO_ID: 5727435
+  BATCH_ID: 268547
+  SRC_SYS_CD_LIC_CMTN: 'LIC_CMTN_DISC_RSKA'
+  DBOwnerWRK: 'znawwrkdb'
