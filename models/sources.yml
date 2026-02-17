@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: config
+    database: DBT_PRACTICE_DB          # replace PROJ_SHARED with your DB
+    schema: PROJ_SHARED                 # replace if your view is in a different schema
+    tables:
+      - name: dbt_config_param
+        description: "Latest active config params - created from CONFIG_PARAMS table"
+      - name: customers
+        description: "Example source table"
+      - name: country
+        description: "Example source table"
+      - name: customer_type
+        description: "Example source table"

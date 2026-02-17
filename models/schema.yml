@@ -1,127 +1,47 @@
 version: 2
+
 models:
-  - name: stg_work_actu_adjt
-    description: "Staging for WORK_ACTU_ADJT; standardizes and passes through raw data."
-    columns:
-      - name: ACTU_ADJT_ID
-        description: "Actuarial adjustment ID (example)."
-        tests: [not_null]
+  - name: ref_int_customer
+    description: "Customer master table"
 
-  - name: stg_fact_actu_adjt_accum_mm
-    description: "Staging for FACT_ACTU_ADJT_ACCUM_MM."
     columns:
-      - name: FACT_ADJT_ID
-        tests: [not_null]
 
-  - name: stg_wrk_actu_adjt_rstmt_opn_pymt_ptrn
-    description: "Staging for WRK_ACTU_ADJT_RSTMT_OPN_PYMT_PTRN."
-    columns:
-      - name: RSTMT_ID
-        tests: [not_null]
-
-  - name: stg_wrk_ifrs_qtr_incr_paid
-    description: "Staging for WRK_IFRS_QTR_INCR_PAID."
-    columns:
-      - name: QTR_PAID_ID
-        tests: [not_null]
-
-  - name: stg_wrk_actu_adjt_port_xfer
-    description: "Staging for WRK_ACTU_ADJT_PORT_XFER."
-    columns:
-      - name: PORT_XFER_ID
-        tests: [not_null]
-
-  - name: wrk_ifrs_lic_calc
-    description: |
-      Final mart model (znawwrkdb.dbaall.WRK_IFRS_LIC_CALC); combines all six partitions and applies all business logic, mappings, primary key, parameterizations, and final field calculations as per business specification.
-    columns:
-      - name: WRK_IFRS_LIC_CALC_PK
-        description: "Surrogate PK generated as NEXTVAL."
+      - name: customer_id
+        description: "Primary key of customer"
         tests:
-          - unique
           - not_null
-      - name: ACTU_ADJT_BNRY_ID
-        tests: [not_null]
-      - name: IBNR_AY_LC_BNRY_ID
-        tests: [not_null]
-      - name: CL_PPAY_LKD_YC_LPT_BNRY_ID
-      - name: CL_PPAY_CUR_YC_LPT_BNRY_ID
-      - name: CL_PPAY_CUR_YCQ_LPT_BNRY_ID
-      - name: OPN_PPAY_LKD_YC_BNRY_ID
-      - name: OPN_PPAY_CUR_YC_LPT_BNRY_ID
-      - name: IBNR_CORPLOB_BNRY_ID
-      - name: ACQN_ALT_BUSN_KEY
-      - name: ACTU_PRFT_LN_ALT_BUSN_KEY
-      - name: ASSM_REINS_AGMT_ALT_BUSN_KEY
-      - name: BNDL_ALT_BUSN_KEY
-      - name: CEDE_REINS_AGMT_ALT_BUSN_KEY
-      - name: CMTN_AGMT_ALT_BUSN_KEY
-      - name: COVG_LOB_ALT_BUSN_KEY
-      - name: DIR_ASSM_CEDE_ALT_BUSN_KEY
-      - name: EXC_ALT_BUSN_KEY
-      - name: FINC_COVG_LOB_ALT_BUSN_KEY
-      - name: FINC_INSR_ALT_BUSN_KEY
-      - name: FINC_INT_ORG_ALT_BUSN_KEY
-      - name: FINC_LOB_ALT_BUSN_KEY
-      - name: FINC_ST_ALT_BUSN_KEY
-      - name: IBNR_FAM_ALT_BUSN_KEY
-      - name: INS_TYP_ALT_BUSN_KEY
-      - name: INSR_ALT_BUSN_KEY
-      - name: INT_ORG_ALT_BUSN_KEY
-      - name: RETRO_RATG_ALT_BUSN_KEY
-      - name: ST_ALT_BUSN_KEY
-      - name: TYP_INS_ALT_BUSN_KEY
-      - name: CROP_REINS_YY
-      - name: CUR_PRIR_IND
-      - name: IBNR_FAM_CD
-      - name: FINC_ACC_EXPO_CC_YY
-      - name: FINC_CL_PERD_DT
-      - name: ITER_ID
-      - name: POL_EFF_CC_YY
-      - name: RETRO_CEDE_IND
-      - name: SRC_SYS_CD
-      - name: CALC_SRC_SYS_CD
-      - name: ULAE_GP_CD
-      - name: ULT_REINS_AGMT_NBR
-      - name: ACTU_UNT_OF_ACCT_DERVN_ALT_BUSN_KEY
-      - name: ORGL_ACTU_UNT_OF_ACCT_DERVN_ALT_BUSN_KEY
-      - name: DRVD_FINC_LOS_CATG_ALT_BUSN_KEY
-      - name: OPN_PYMT_PTRN_CD
-      - name: CL_PYMT_PTRN_CD
-      - name: OPN_CUR_YLD_CURVE_CRCY_CD
-      - name: OPN_LKD_YLD_CURVE_CRCY_CD
-      - name: CL_CUR_YLD_CURVE_CRCY_CD
-      - name: CL_LKD_YLD_CURVE_CRCY_CD
-      - name: LOCL_CRCY_CD
-      - name: FUT_QTR
-      - name: CORP_LOB_CD
-      - name: DATA_UNT
-      - name: SRC_REC_CMTN_IND
-      - name: SRC_REC_UUBVI_ELIM_IND
-      - name: SRC_TAB_NM
-      - name: EXEC_SEQ
-      - name: IFRS_MNTRY_TYP_ID
-      - name: LOCL_AMT
-      - name: LOCL_CRCY_ALT_BUSN_KEY
-      - name: REVAL_CUR_LOCL_AMT
-      - name: REVAL_LOCL_CHG_AMT
-      - name: TRAN_AMT
-      - name: TRAN_CRCY_ALT_BUSN_KEY
-      - name: CONTR_AMT
-      - name: CONTR_CRCY_ALT_BUSN_KEY
-      - name: EFF_FM_TISTMP
-      - name: EFF_TO_TISTMP
-      - name: POP_INFO_ID
-      - name: UPDT_POP_INFO_ID
-      - name: BAT_ID
-      - name: IBNR_AY_LKD_YC_LPT_BNRY_ID
-      - name: CLR_HOUS_POL_CATG_ALT_BUSN_KEY
-      - name: INTL_PGM_PRODG_CTRY_ALT_BUSN_KEY
-      - name: INTL_PGM_RECV_CTRY_ALT_BUSN_KEY
-      - name: SRC_LOB_ALT_BUSN_KEY
-      - name: REVAL_CUR_CONTR_AMT
-      - name: REVAL_CONTR_CHG_AMT
-      - name: LOS_PORT_XFER_IND
-      - name: LOS_PORT_XFER_CD
-      - name: OPN_PPAY_LKD_YC_LPT_BNRY_ID
-      - name: FINC_SERV_ROL_FOR_REINS_ALT_BUSN_KEY
+          - unique
+
+      - name: country_code
+        description: "Country of the customer"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_country')
+              field: country_code
+              config:
+                severity: error
+              #where: "is_active = true"
+
+      - name: customer_type
+        description: "Customer classification"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['RETAIL','CORPORATE','GOVT']
+          - relationships:
+              to: ref('stg_customer_type')
+              field: customer_type
+              #where: "is_active = true"
+
+      - name: amount
+        tests:
+          - not_null
+
+      - name: business_date
+        tests:
+          - not_null
+
+      - name: load_ts
+        tests:
+          - not_null

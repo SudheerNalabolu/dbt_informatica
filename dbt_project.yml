@@ -1,29 +1,26 @@
-name: ifrs_lic_calc_etl
+name: my_project
 version: '1.0'
-profile: snowflake
 config-version: 2
 
+profile: my_snowflake_profile
+
+# models config
 model-paths: ["models"]
-seed-paths: ["seeds"]
+macro-paths: ["macros"]
 analysis-paths: ["analysis"]
-data-paths: ["data"]
 test-paths: ["tests"]
+snapshot-paths: ["snapshots"]
+seed-paths: ["seeds"]
 target-path: "target"
-clean-targets:
-  - "target"
-  - "dbt_modules"
 
 models:
-  ifrs_lic_calc_etl:
-    staging:
-      +materialized: view
-    marts:
-      +materialized: table
-    +post-hook: "ANALYZE TABLE znawwrkdb.dbaall.WRK_IFRS_LIC_CALC"
+  my_project:
+    +materialized: view
 
-vars:
-  ML_FINC_PRD: '202508'
-  POP_INFO_ID: 5727435
-  BATCH_ID: 268547
-  SRC_SYS_CD_LIC_CMTN: 'LIC_CMTN_DISC_RSKA'
-  DBOwnerWRK: 'znawwrkdb'
+tests:
+  +store_failures: true
+  +store_failures_as: table
+
+# on-run-start: insert a run_control record for traceability (optional)
+#on-run-start:
+#  - "{{ job_preprocessing(var('step_key', none)) }}"
